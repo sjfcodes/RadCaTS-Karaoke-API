@@ -15,7 +15,7 @@ const authenticateMe = (req) => {
   }
   let data = false;
   if (token) {
-    data = jwt.verify(token, process.env.PRIVATEKEY, (err, data) => {
+    data = jwt.verify(token, process.env.PRIVATE_KEY, (err, data) => {
       if (err) {
         return false;
       } else {
@@ -35,7 +35,7 @@ router.post("/api/signup", (req, res) => {
           username: newUser.username,
           id: newUser._id,
         },
-        process.env.PRIVATEKEY,
+        process.env.PRIVATE_KEY,
         {
           expiresIn: "2h",
         }
@@ -56,7 +56,7 @@ router.post("/api/login", (req, res) => {
             username: user.username,
             id: user.id,
           },
-          process.env.PRIVATEKEY,
+          process.env.PRIVATE_KEY,
           {
             expiresIn: "2h",
           }
@@ -81,7 +81,7 @@ router.put("/api/pfp/:id", (req, res) => {
     })
 })
 
-// Autenticate user login information and populates homepage with user data
+// Authenticate user login information and populates homepage with user data
 router.get("/", (req, res) => {
   let tokenData = authenticateMe(req);
   if (tokenData) {
