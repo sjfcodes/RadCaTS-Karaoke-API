@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/chomieu/RadCaTS-Karaoke-Backend#readme",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.377.0",
     "bcrypt": "^5.0.0",
-    "cloudinary": "^1.25.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "ffmpeg": "0.0.4",
