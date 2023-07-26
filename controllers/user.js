@@ -4,20 +4,19 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+const expiresIn = "1d";
+
 const authenticateMe = (req) => {
   let token = false;
-  if (!req.headers) {
-    token = false;
-  } else if (!req.headers.authorization) {
-    token = false;
-  } else {
-    token = req.headers.authorization.split(" ")[1];
+  if (req.headers?.authorization) {
+    token = req.headers.authorization.split("Bearer: ")[1];
   }
+
   let data = false;
   if (token) {
     data = jwt.verify(token, process.env.PRIVATE_KEY, (err, data) => {
       if (err) {
-        return false;
+        return null;
       } else {
         return data;
       }
@@ -37,7 +36,7 @@ router.post("/api/signup", (req, res) => {
         },
         process.env.PRIVATE_KEY,
         {
-          expiresIn: "2h",
+          expiresIn,
         }
       );
       return res.json({ user: newUser, token: token });
@@ -58,7 +57,7 @@ router.post("/api/login", (req, res) => {
           },
           process.env.PRIVATE_KEY,
           {
-            expiresIn: "2h",
+            expiresIn,
           }
         );
         return res.json({ user: user, token: token });
@@ -72,20 +71,25 @@ router.post("/api/login", (req, res) => {
 });
 
 router.put("/api/pfp/:id", (req, res) => {
-  db.User.findOneAndUpdate({ _id: req.params.id }, { profilePicture: req.body.url })
+  db.User.findOneAndUpdate(
+    { _id: req.params.id },
+    { profilePicture: req.body.url }
+  )
     .then(() => {
-      res.send("profile picture updated")
+      res.send("profile picture updated");
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json(err);
-    })
-})
+    });
+});
 
 // Authenticate user login information and populates homepage with user data
 router.get("/", (req, res) => {
   let tokenData = authenticateMe(req);
+  console.log(tokenData);
   if (tokenData) {
-    db.User.findOne({ _id: tokenData.id }).populate("records")
+    db.User.findOne({ _id: tokenData.id })
+      .populate("records")
       .then((user) => {
         let token = req.headers.authorization.split(" ")[1];
         res.json({ user, token });
