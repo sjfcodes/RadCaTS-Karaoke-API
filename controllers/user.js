@@ -86,7 +86,7 @@ router.put("/api/pfp/:id", (req, res) => {
 // Authenticate user login information and populates homepage with user data
 router.get("/", (req, res) => {
   let tokenData = authenticateMe(req);
-  console.log(tokenData);
+  console.log("tokenData", tokenData);
   if (tokenData) {
     db.User.findOne({ _id: tokenData.id })
       .populate("records")
