@@ -6,6 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 
+app.use(cors());
 async function main() {
   app.use(logger("dev"));
   app.use(express.urlencoded({ extended: true }));
@@ -20,7 +21,6 @@ async function main() {
     );
     next();
   });
-  app.use(cors());
 
   // Database
   await mongoose.connect(
