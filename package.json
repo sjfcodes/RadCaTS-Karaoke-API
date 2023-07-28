@@ -5,8 +5,8 @@
   "main": "controller.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --trace-warnings server.js",
-    "dev": "nodemon --trace-warnings server.js"
+    "start": "node index.js",
+    "dev": "nodemon --trace-warnings index.js"
   },
   "repository": {
     "type": "git",
