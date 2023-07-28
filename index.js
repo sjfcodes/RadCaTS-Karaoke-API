@@ -31,7 +31,7 @@ async function main() {
     }
   );
 
-  app.get("/healthcheck", (req, res) => {
+  app.get("/healthcheck", (_, res) => {
     res.send({ message: "hello world" });
   });
 
