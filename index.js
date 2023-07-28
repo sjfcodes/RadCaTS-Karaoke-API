@@ -31,6 +31,10 @@ async function main() {
     }
   );
 
+  app.get("/healthcheck", (req, res) => {
+    res.send({ message: "hello world" });
+  });
+
   // User Routes
   const userRoutes = require("./controllers/user");
   app.use(userRoutes);
