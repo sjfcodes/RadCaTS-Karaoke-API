@@ -34,7 +34,6 @@ async function main() {
   app.get("/healthcheck", (_, res) => {
     res.send({ message: "hello world" });
   });
-  
 
   // User Routes
   const userRoutes = require("./controllers/user");
